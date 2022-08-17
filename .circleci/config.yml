@@ -56,6 +56,11 @@ jobs:
       - aws-cli/setup
       - checkout
       - run:
+          name: Send secrets to EB
+          command: |
+            echo ${AWS_BUCKET}
+            eb setenv AWS_BUCKET=${AWS_BUCKET} AWS_PROFILE=${default} AWS_REGION=${us-east-1} JWT_SECRET=${mysecretstring} POSTGRES_HOST=${POSTGRES_HOST} POSTGRES_PASSWORD=${POSTGRES_PASSWORD} POSTGRES_USERNAME=${POSTGRES_USERNAME} URL=${URL}
+      - run:
           name: Deploy App
           command: |
             npm run deploy
